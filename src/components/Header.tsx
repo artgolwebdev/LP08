@@ -1,11 +1,21 @@
-import { motion } from 'motion/react';
-import React from 'react';
+import { motion, AnimatePresence } from 'motion/react';
+import React, { useState } from 'react';
 
 interface HeaderProps {
   scrollToSection: (sectionId: string) => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({ scrollToSection }) => {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  const handleMobileNavClick = (sectionId: string) => {
+    scrollToSection(sectionId);
+    setIsMobileMenuOpen(false);
+  };
   return (
     <motion.header 
       initial={{ opacity: 0, y: -20 }}
@@ -99,17 +109,87 @@ export const Header: React.FC<HeaderProps> = ({ scrollToSection }) => {
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="md:hidden relative p-3 bg-gradient-to-br from-emerald-900/50 to-amber-900/50 backdrop-blur-lg border border-emerald-400/30 rounded-lg shadow-lg"
+            onClick={toggleMobileMenu}
+            className="md:hidden relative p-3 bg-gradient-to-br from-emerald-900/50 to-amber-900/50 backdrop-blur-lg border border-emerald-400/30 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300"
           >
             <div className="absolute inset-0 bg-gradient-to-br from-emerald-600/10 to-amber-600/10 rounded-lg"></div>
             <div className="absolute inset-[1px] bg-gradient-to-br from-emerald-950/80 to-amber-950/80 rounded-[7px]"></div>
             <div className="relative w-6 h-6 flex flex-col justify-center gap-1">
-              <div className="w-full h-0.5 bg-gradient-to-r from-emerald-400 to-amber-400 rounded-full"></div>
-              <div className="w-full h-0.5 bg-gradient-to-r from-amber-400 to-emerald-400 rounded-full"></div>
-              <div className="w-full h-0.5 bg-gradient-to-r from-emerald-400 to-amber-400 rounded-full"></div>
+              <motion.div 
+                className="w-full h-0.5 bg-gradient-to-r from-emerald-400 to-amber-400 rounded-full"
+                animate={{ 
+                  rotate: isMobileMenuOpen ? 45 : 0,
+                  y: isMobileMenuOpen ? 6 : 0
+                }}
+                transition={{ duration: 0.3 }}
+              ></motion.div>
+              <motion.div 
+                className="w-full h-0.5 bg-gradient-to-r from-amber-400 to-emerald-400 rounded-full"
+                animate={{ 
+                  opacity: isMobileMenuOpen ? 0 : 1
+                }}
+                transition={{ duration: 0.3 }}
+              ></motion.div>
+              <motion.div 
+                className="w-full h-0.5 bg-gradient-to-r from-emerald-400 to-amber-400 rounded-full"
+                animate={{ 
+                  rotate: isMobileMenuOpen ? -45 : 0,
+                  y: isMobileMenuOpen ? -6 : 0
+                }}
+                transition={{ duration: 0.3 }}
+              ></motion.div>
             </div>
           </motion.button>
         </div>
+
+        {/* Mobile Menu Dropdown */}
+        <AnimatePresence>
+          {isMobileMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3, ease: 'easeInOut' }}
+              className="md:hidden overflow-hidden"
+            >
+              <div className="px-4 pb-4">
+                <div className="bg-gradient-to-br from-emerald-950/90 to-amber-950/90 backdrop-blur-xl border border-emerald-400/20 rounded-xl shadow-2xl">
+                  <div className="absolute inset-0 bg-gradient-to-br from-emerald-600/5 to-amber-600/5 rounded-xl"></div>
+                  <div className="relative p-4 space-y-2">
+                    {[
+                      { label: 'Home', id: 'hero' },
+                      { label: 'Services', id: 'services' },
+                      { label: 'Book Now', id: 'booking' },
+                      { label: 'Contact', id: 'contact' }
+                    ].map((item, index) => (
+                      <motion.button
+                        key={item.id}
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.3, delay: index * 0.1 }}
+                        onClick={() => handleMobileNavClick(item.id)}
+                        className="w-full text-left px-4 py-3 bg-gradient-to-br from-emerald-900/40 to-amber-900/40 backdrop-blur-lg border border-emerald-400/20 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group"
+                      >
+                        {/* 3D Glass Effect */}
+                        <div className="absolute inset-0 bg-gradient-to-br from-emerald-600/5 to-amber-600/5 group-hover:from-emerald-600/10 group-hover:to-amber-600/10 transition-all duration-300"></div>
+                        <div className="absolute inset-[1px] bg-gradient-to-br from-emerald-950/60 to-amber-950/60 rounded-[7px]"></div>
+                        <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-emerald-400/30 to-transparent group-hover:via-emerald-400/50 transition-all duration-300"></div>
+                        <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-amber-400/30 to-transparent group-hover:via-amber-400/50 transition-all duration-300"></div>
+                        
+                        <span className="relative z-10 text-emerald-100 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-emerald-300 group-hover:to-amber-300 group-hover:bg-clip-text transition-all duration-300 tracking-wide uppercase text-sm" style={{fontFamily: 'Cinzel, serif', fontWeight: '600'}}>
+                          {item.label}
+                        </span>
+
+                        {/* Hover glow effect */}
+                        <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-emerald-400/0 via-emerald-400/0 to-amber-400/0 group-hover:from-emerald-400/10 group-hover:via-transparent group-hover:to-amber-400/10 transition-all duration-500"></div>
+                      </motion.button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
 
       {/* Glass refraction effect */}
