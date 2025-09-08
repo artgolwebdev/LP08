@@ -2,9 +2,12 @@ import { Button } from "./ui/button";
 import { Card, CardContent } from "./ui/card";
 import { motion } from 'motion/react';
 import { Phone, MapPin, Clock } from 'lucide-react';
+import { useLanguage } from '../contexts/LanguageContext';
 import React from 'react';
 
 export const ContactSection: React.FC = () => {
+  const { t } = useLanguage();
+  
   return (
     <section id="contact" className="py-20 bg-gradient-to-br from-slate-900 to-emerald-950 relative overflow-hidden">
       {/* Google Maps Background */}
@@ -59,8 +62,8 @@ export const ContactSection: React.FC = () => {
                   <div className="absolute top-2 right-2 w-3 h-3 border-r-2 border-t-2 border-emerald-400/70"></div>
                   <div className="absolute bottom-2 left-2 w-3 h-3 border-l-2 border-b-2 border-emerald-400/70"></div>
                   <div className="absolute bottom-2 right-2 w-3 h-3 border-r-2 border-b-2 border-amber-400/70"></div>
-                  <div className="relative text-amber-200 tracking-[0.4em] uppercase text-xl" style={{fontFamily: 'Cinzel, serif', fontWeight: '600'}}>
-                    Contact Us
+                  <div className="relative text-amber-200 tracking-[0.4em] uppercase text-2xl" style={{fontFamily: 'Cinzel, serif', fontWeight: '700'}}>
+                    {t('contact.title')}
                   </div>
                 </div>
                 <div className="flex flex-col gap-2">
@@ -71,11 +74,11 @@ export const ContactSection: React.FC = () => {
             </div>
           </div>
           <div className="mb-8">
-            <div className="text-4xl lg:text-5xl text-transparent bg-gradient-to-r from-emerald-400 to-amber-400 bg-clip-text leading-tight tracking-wider uppercase mb-4" style={{fontFamily: 'Cinzel, serif', fontWeight: '900'}}>
-              Visit Our Clinic
+            <div className="text-5xl lg:text-6xl text-transparent bg-gradient-to-r from-emerald-400 to-amber-400 bg-clip-text leading-tight tracking-wider uppercase mb-4" style={{fontFamily: 'Cinzel, serif', fontWeight: '900'}}>
+              {t('contact.subtitle')}
             </div>
-            <div className="text-base tracking-[0.3em] text-emerald-300/70 uppercase" style={{fontFamily: 'Inter, sans-serif', fontWeight: '500'}}>
-              Where Luxury Meets Excellence
+            <div className="text-lg tracking-[0.3em] text-emerald-300/70 uppercase" style={{fontFamily: 'Inter, sans-serif', fontWeight: '600'}}>
+              {t('contact.tagline')}
             </div>
           </div>
         </motion.div>
@@ -92,10 +95,8 @@ export const ContactSection: React.FC = () => {
                 <div className="p-3 bg-gradient-to-br from-emerald-600 to-amber-600 rounded-xl w-fit mx-auto mb-4 shadow-lg">
                   <MapPin className="w-6 h-6 text-white" />
                 </div>
-                <div className="text-xl text-emerald-100 mb-3 tracking-wide uppercase" style={{fontFamily: 'Cinzel, serif', fontWeight: '700'}}>Location</div>
-                <p className="text-emerald-300/90 text-base leading-relaxed" style={{fontFamily: 'Inter, sans-serif', fontWeight: '300'}}>
-                  Chanoch St 41<br />
-                  Tel Aviv, Israel
+                <div className="text-2xl text-emerald-100 mb-3 tracking-wide uppercase" style={{fontFamily: 'Cinzel, serif', fontWeight: '800'}}>{t('contact.location')}</div>
+                <p className="text-emerald-300/90 text-lg leading-relaxed" style={{fontFamily: 'Inter, sans-serif', fontWeight: '500'}} dangerouslySetInnerHTML={{ __html: t('contact.address') }}>
                 </p>
               </CardContent>
             </Card>
@@ -112,10 +113,10 @@ export const ContactSection: React.FC = () => {
                 <div className="p-3 bg-gradient-to-br from-emerald-600 to-amber-600 rounded-xl w-fit mx-auto mb-4 shadow-lg">
                   <Phone className="w-6 h-6 text-white" />
                 </div>
-                <div className="text-xl text-emerald-100 mb-3 tracking-wide uppercase" style={{fontFamily: 'Cinzel, serif', fontWeight: '700'}}>Phone Numbers</div>
-                <div className="space-y-2 text-emerald-300/90 text-base" style={{fontFamily: 'Inter, sans-serif', fontWeight: '300'}}>
-                  <p>054-798-1852</p>
-                  <p>054-985-0418</p>
+                <div className="text-2xl text-emerald-100 mb-3 tracking-wide uppercase" style={{fontFamily: 'Cinzel, serif', fontWeight: '800'}}>{t('contact.phone')}</div>
+                <div className="space-y-2 text-emerald-300/90 text-lg" style={{fontFamily: 'Inter, sans-serif', fontWeight: '500'}}>
+                  <p>{t('contact.phone1')}</p>
+                  <p>{t('contact.phone2')}</p>
                 </div>
               </CardContent>
             </Card>
@@ -132,12 +133,12 @@ export const ContactSection: React.FC = () => {
                 <div className="p-3 bg-gradient-to-br from-emerald-600 to-amber-600 rounded-xl w-fit mx-auto mb-4 shadow-lg">
                   <Clock className="w-6 h-6 text-white" />
                 </div>
-                <div className="text-xl text-emerald-100 mb-3 tracking-wide uppercase" style={{fontFamily: 'Cinzel, serif', fontWeight: '700'}}>Business Hours</div>
-                <div className="space-y-2 text-emerald-300/90 text-sm" style={{fontFamily: 'Inter, sans-serif', fontWeight: '300'}}>
-                  <p>Sunday - Thursday</p>
-                  <p className="text-base text-emerald-200">9:00 AM - 8:00 PM</p>
-                  <p>Friday</p>
-                  <p className="text-base text-emerald-200">9:00 AM - 4:00 PM</p>
+                <div className="text-2xl text-emerald-100 mb-3 tracking-wide uppercase" style={{fontFamily: 'Cinzel, serif', fontWeight: '800'}}>{t('contact.hours')}</div>
+                <div className="space-y-2 text-emerald-300/90 text-base" style={{fontFamily: 'Inter, sans-serif', fontWeight: '500'}}>
+                  <p>{t('contact.weekdays')}</p>
+                  <p className="text-lg text-emerald-200">{t('contact.weekdayHours')}</p>
+                  <p>{t('contact.friday')}</p>
+                  <p className="text-lg text-emerald-200">{t('contact.fridayHours')}</p>
                 </div>
               </CardContent>
             </Card>
@@ -154,13 +155,13 @@ export const ContactSection: React.FC = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Button size="lg" className="relative bg-gradient-to-br from-emerald-900 via-amber-900 via-50% to-emerald-900 hover:from-emerald-800 hover:via-amber-800 hover:to-emerald-800 text-emerald-100 border border-emerald-600/40 px-8 py-6 text-base font-weight-medium shadow-xl overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-emerald-700/20 via-amber-700/20 to-transparent"></div>
-              <span className="relative z-10 tracking-wide uppercase" style={{fontFamily: 'Cinzel, serif', fontWeight: '700'}}>Get Directions</span>
+              <span className="relative z-10 tracking-wide uppercase text-lg" style={{fontFamily: 'Cinzel, serif', fontWeight: '800'}}>{t('contact.getDirections')}</span>
             </Button>
             
             <Button variant="outline" size="lg" className="relative bg-gradient-to-br from-amber-900/30 to-emerald-900/30 hover:from-amber-800/40 hover:to-emerald-800/40 border-2 border-amber-400/30 text-amber-100 hover:text-amber-100 px-8 py-6 text-base font-weight-medium shadow-xl overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-amber-700/20 to-transparent"></div>
               <Phone className="relative z-10 w-5 h-5 mr-2" />
-              <span className="relative z-10 tracking-wide uppercase" style={{fontFamily: 'Cinzel, serif', fontWeight: '700'}}>Call Now</span>
+              <span className="relative z-10 tracking-wide uppercase text-lg" style={{fontFamily: 'Cinzel, serif', fontWeight: '800'}}>{t('contact.callNow')}</span>
             </Button>
           </div>
         </motion.div>

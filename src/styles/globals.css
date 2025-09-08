@@ -1,7 +1,7 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  --font-size: 14px;
+  --font-size: 16px;
   --background: #ffffff;
   --foreground: oklch(0.145 0 0);
   --card: #ffffff;
@@ -19,8 +19,8 @@
   --border: rgba(0, 0, 0, 0.1);
   --input: transparent;
   --input-background: #f3f3f5;
-  --font-weight-medium: 500;
-  --font-weight-normal: 400;
+  --font-weight-medium: 600;
+  --font-weight-normal: 500;
   --ring: oklch(0.708 0 0);
   --radius: 0.625rem;
 }
@@ -43,8 +43,8 @@
   --border: oklch(0.269 0 0);
   --input: oklch(0.269 0 0);
   --ring: oklch(0.439 0 0);
-  --font-weight-medium: 500;
-  --font-weight-normal: 400;
+  --font-weight-medium: 600;
+  --font-weight-normal: 500;
 }
 
 @theme inline {

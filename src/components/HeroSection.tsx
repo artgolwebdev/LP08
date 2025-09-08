@@ -1,11 +1,17 @@
 import { Button } from "./ui/button";
 import { ImageWithFallback } from './figma/ImageWithFallback';
 import { motion } from 'motion/react';
+import { useLanguage } from '../contexts/LanguageContext';
 import React from 'react';
 
-export const HeroSection: React.FC = () => {
+interface HeroSectionProps {
+  scrollToSection: (sectionId: string) => void;
+}
+
+export const HeroSection: React.FC<HeroSectionProps> = ({ scrollToSection }) => {
+  const { t, getFontFamily, isRTL } = useLanguage();
   return (
-    <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-24 sm:pt-20">
+    <section id="hero" className={`relative min-h-screen flex items-center justify-center overflow-hidden ${isRTL ? 'rtl' : 'ltr'}`} style={{paddingTop: '120px'}}>
       <div className="absolute inset-0 bg-gradient-to-br from-emerald-900/20 via-transparent to-amber-900/20"></div>
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(16,185,129,0.1),transparent_50%)]"></div>
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(217,119,6,0.1),transparent_50%)]"></div>
@@ -26,49 +32,50 @@ export const HeroSection: React.FC = () => {
         }}></div>
       </div>
       
-      <div className="container mx-auto px-4 sm:px-6 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 items-center mt-8 sm:mt-0">
+      <div className={`container mx-auto px-4 sm:px-6 relative z-10 ${isRTL ? 'rtl' : 'ltr'}`}>
+        <div className={`grid lg:grid-cols-2 gap-12 items-center mt-12 sm:mt-0 ${isRTL ? 'lg:grid-flow-col-dense' : ''}`}>
           <motion.div 
-            initial={{ opacity: 0, x: -50 }}
+            initial={{ opacity: 0, x: isRTL ? 50 : -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-center lg:text-left"
+            className={`text-center ${isRTL ? 'lg:text-right' : 'lg:text-left'}`}
           >
-            <div className="mb-6 flex items-center justify-center lg:justify-start px-4 sm:px-0">
+            <div className={`mb-8 flex items-center justify-center ${isRTL ? 'lg:justify-end' : 'lg:justify-start'} px-6 sm:px-0`}>
               <div className="relative">
-                <div className="flex items-center gap-2 sm:gap-4">
-                  <div className="h-px w-8 sm:w-12 bg-gradient-to-r from-transparent to-emerald-400"></div>
-                  <div className="relative px-3 sm:px-6 py-2 sm:py-3 border border-emerald-400/40 bg-gradient-to-r from-emerald-900/20 to-amber-900/20 backdrop-blur-sm">
+                <div className={`flex items-center gap-3 sm:gap-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
+                  <div className={`h-px w-10 sm:w-12 ${isRTL ? 'bg-gradient-to-l from-transparent to-emerald-400' : 'bg-gradient-to-r from-transparent to-emerald-400'}`}></div>
+                  <div className="relative px-4 sm:px-6 py-3 sm:py-3 border border-emerald-400/40 bg-gradient-to-r from-emerald-900/20 to-amber-900/20 backdrop-blur-sm">
                     <div className="absolute inset-0 bg-gradient-to-r from-emerald-600/10 to-amber-600/10"></div>
-                    <div className="relative text-emerald-300 tracking-[0.2em] sm:tracking-[0.3em] uppercase text-xs sm:text-sm whitespace-nowrap" style={{fontFamily: 'Inter, sans-serif', fontWeight: '600'}}>
-                      Premium Beauty Clinic
+                    <div className="relative text-emerald-300 tracking-[0.15em] sm:tracking-[0.3em] uppercase text-base sm:text-lg whitespace-nowrap" style={{fontFamily: getFontFamily('body'), fontWeight: '800'}}>
+                      {t('hero.premium')}
                     </div>
                   </div>
-                  <div className="h-px w-8 sm:w-12 bg-gradient-to-l from-transparent to-amber-400"></div>
+                  <div className={`h-px w-10 sm:w-12 ${isRTL ? 'bg-gradient-to-r from-transparent to-amber-400' : 'bg-gradient-to-l from-transparent to-amber-400'}`}></div>
                 </div>
-                <div className="absolute -top-1 -left-1 w-2 h-2 border-l border-t border-emerald-400"></div>
-                <div className="absolute -top-1 -right-1 w-2 h-2 border-r border-t border-amber-400"></div>
-                <div className="absolute -bottom-1 -left-1 w-2 h-2 border-l border-b border-emerald-400"></div>
-                <div className="absolute -bottom-1 -right-1 w-2 h-2 border-r border-b border-amber-400"></div>
+                <div className={`absolute -top-1 ${isRTL ? '-right-1' : '-left-1'} w-2 h-2 ${isRTL ? 'border-r' : 'border-l'} border-t border-emerald-400`}></div>
+                <div className={`absolute -top-1 ${isRTL ? '-left-1' : '-right-1'} w-2 h-2 ${isRTL ? 'border-l' : 'border-r'} border-t border-amber-400`}></div>
+                <div className={`absolute -bottom-1 ${isRTL ? '-right-1' : '-left-1'} w-2 h-2 ${isRTL ? 'border-r' : 'border-l'} border-b border-emerald-400`}></div>
+                <div className={`absolute -bottom-1 ${isRTL ? '-left-1' : '-right-1'} w-2 h-2 ${isRTL ? 'border-l' : 'border-r'} border-b border-amber-400`}></div>
               </div>
             </div>
             
             <div className="mb-6 px-4 sm:px-0">
-              <div className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-transparent bg-gradient-to-r from-emerald-400 via-amber-300 to-emerald-400 bg-clip-text leading-tight tracking-wide" style={{fontFamily: 'Poppins, sans-serif', fontWeight: '900'}}>
-                JD BEAUTY &<br />NAILS SALON
+              <div className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl text-transparent bg-gradient-to-r from-emerald-400 via-amber-300 to-emerald-400 bg-clip-text leading-tight tracking-wide" style={{fontFamily: getFontFamily('display'), fontWeight: '900'}} dangerouslySetInnerHTML={{ __html: t('hero.title') }}>
               </div>
-              <div className="text-sm sm:text-base md:text-lg tracking-[0.15em] sm:tracking-[0.2em] text-emerald-300/80 mt-2 uppercase px-2 sm:px-0" style={{fontFamily: 'Inter, sans-serif', fontWeight: '500'}}>
-                LUXURY · ELEGANCE · EXCELLENCE
+              <div className="text-lg sm:text-xl md:text-2xl tracking-[0.15em] sm:tracking-[0.2em] text-emerald-300/80 mt-2 uppercase px-2 sm:px-0" style={{fontFamily: getFontFamily('body'), fontWeight: '700'}}>
+                {t('hero.subtitle')}
               </div>
             </div>
             
-            <p className="text-lg sm:text-xl text-emerald-100 mb-8 leading-relaxed px-4 sm:px-0" style={{fontFamily: 'Inter, sans-serif', fontWeight: '400'}}>
-              Experience luxury treatments with advanced technology.<br />
-              Your beauty transformation starts here.
+            <p className="text-2xl sm:text-3xl text-emerald-100 mb-8 leading-relaxed px-4 sm:px-0" style={{fontFamily: getFontFamily('body'), fontWeight: '600'}} dangerouslySetInnerHTML={{ __html: t('hero.description') }}>
             </p>
             
-            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start px-4 sm:px-0">
-              <Button size="lg" className="relative bg-gradient-to-br from-amber-900 via-amber-800 to-amber-900 hover:from-amber-800 hover:via-amber-700 hover:to-amber-800 text-amber-100 border border-amber-600/40 px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg font-weight-medium shadow-2xl overflow-hidden">
+            <div className={`flex flex-col sm:flex-row gap-4 justify-center ${isRTL ? 'lg:justify-end' : 'lg:justify-start'} px-4 sm:px-0`}>
+              <Button 
+                size="lg" 
+                onClick={() => scrollToSection('booking')}
+                className="relative bg-gradient-to-br from-amber-900 via-amber-800 to-amber-900 hover:from-amber-800 hover:via-amber-700 hover:to-amber-800 text-amber-100 border border-amber-600/40 px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg font-weight-medium shadow-2xl overflow-hidden"
+              >
                 <div className="absolute inset-0 opacity-25" style={{
                   backgroundImage: `url("data:image/svg+xml,%3Csvg width='50' height='50' viewBox='0 0 50 50' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3ClinearGradient id='btn-grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23DAA520;stop-opacity:0.9'/%3E%3Cstop offset='100%25' style='stop-color:%23B8860B;stop-opacity:0.7'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect x='5' y='5' width='15' height='15' rx='2' fill='url(%23btn-grad)' opacity='0.3'/%3E%3Ctext x='8' y='16' font-family='Cormorant Garamond,serif' font-size='10' font-weight='600' fill='%23DAA520' opacity='0.8'%3EJD%3C/text%3E%3Crect x='30' y='25' width='15' height='15' rx='2' fill='url(%23btn-grad)' opacity='0.25'/%3E%3Ctext x='33' y='36' font-family='Cormorant Garamond,serif' font-size='10' font-weight='600' fill='%23B8860B' opacity='0.8'%3EJD%3C/text%3E%3Cpath d='M0 25L25 0M25 50L50 25' stroke='%23DAA520' stroke-width='0.8' opacity='0.2'/%3E%3C/svg%3E")`,
                   backgroundSize: '50px 50px',
@@ -76,9 +83,14 @@ export const HeroSection: React.FC = () => {
                 }}></div>
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-amber-700/20 to-transparent"></div>
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(218,165,32,0.1),transparent_70%)]"></div>
-                <span className="relative z-10 tracking-wide uppercase" style={{fontFamily: 'Cinzel, serif', fontWeight: '700'}}>Book Appointment</span>
+                <span className="relative z-10 tracking-wide uppercase text-xl sm:text-2xl" style={{fontFamily: getFontFamily('heading'), fontWeight: '900'}}>{t('hero.bookButton')}</span>
               </Button>
-              <Button variant="outline" size="lg" className="relative bg-gradient-to-br from-emerald-900 via-emerald-800 to-emerald-900 hover:from-emerald-800 hover:via-emerald-700 hover:to-emerald-800 border-emerald-600/40 text-emerald-100 hover:text-emerald-100 px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg font-weight-medium shadow-2xl overflow-hidden">
+              <Button 
+                variant="outline" 
+                size="lg" 
+                onClick={() => scrollToSection('services')}
+                className="relative bg-gradient-to-br from-emerald-900 via-emerald-800 to-emerald-900 hover:from-emerald-800 hover:via-emerald-700 hover:to-emerald-800 border-emerald-600/40 text-emerald-100 hover:text-emerald-100 px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg font-weight-medium shadow-2xl overflow-hidden"
+              >
                 <div className="absolute inset-0 opacity-20" style={{
                   backgroundImage: `url("data:image/svg+xml,%3Csvg width='50' height='50' viewBox='0 0 50 50' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3ClinearGradient id='btn-emerald-grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23B8860B;stop-opacity:0.9'/%3E%3Cstop offset='100%25' style='stop-color:%23DAA520;stop-opacity:0.7'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='12' cy='12' r='8' fill='url(%23btn-emerald-grad)' opacity='0.25'/%3E%3Ctext x='7' y='17' font-family='Cormorant Garamond,serif' font-size='10' font-weight='600' fill='%23B8860B' opacity='0.9'%3EJD%3C/text%3E%3Ccircle cx='37' cy='37' r='8' fill='url(%23btn-emerald-grad)' opacity='0.2'/%3E%3Ctext x='32' y='42' font-family='Cormorant Garamond,serif' font-size='10' font-weight='600' fill='%23DAA520' opacity='0.9'%3EJD%3C/text%3E%3Cpath d='M4 12L20 12M12 4L12 20M29 37L45 37M37 29L37 45' stroke='%23DAA520' stroke-width='0.6' opacity='0.3'/%3E%3C/svg%3E")`,
                   backgroundSize: '50px 50px',
@@ -86,16 +98,16 @@ export const HeroSection: React.FC = () => {
                 }}></div>
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-emerald-700/20 to-transparent"></div>
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_70%,rgba(16,185,129,0.1),transparent_70%)]"></div>
-                <span className="relative z-10 tracking-wide uppercase" style={{fontFamily: 'Poppins, sans-serif', fontWeight: '700'}}>View Services</span>
+                <span className="relative z-10 tracking-wide uppercase text-xl sm:text-2xl" style={{fontFamily: getFontFamily('heading'), fontWeight: '900'}}>{t('hero.servicesButton')}</span>
               </Button>
             </div>
           </motion.div>
           
           <motion.div 
-            initial={{ opacity: 0, x: 50 }}
+            initial={{ opacity: 0, x: isRTL ? -50 : 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="relative h-[600px]"
+            className={`relative h-[600px] ${isRTL ? 'lg:order-first' : ''}`}
           >
             {/* Floating Images - Brutalist Positioning */}
             

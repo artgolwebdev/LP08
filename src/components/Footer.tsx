@@ -1,6 +1,9 @@
+import { useLanguage } from '../contexts/LanguageContext';
 import React from 'react';
 
 export const Footer: React.FC = () => {
+  const { t } = useLanguage();
+  
   return (
     <footer className="py-12 bg-gradient-to-r from-emerald-950 to-slate-950 border-t border-emerald-400/20 relative overflow-hidden">
       {/* Premium Footer Pattern */}
@@ -20,20 +23,20 @@ export const Footer: React.FC = () => {
       </div>
       <div className="container mx-auto px-4 text-center relative z-10">
         <div className="text-3xl text-transparent bg-gradient-to-r from-emerald-400 to-amber-400 bg-clip-text mb-4 tracking-wide uppercase" style={{fontFamily: 'Poppins, sans-serif', fontWeight: '800'}}>
-          JD Beauty & Nails Salon
+          {t('footer.title')}
         </div>
         <div className="text-emerald-300 mb-6 tracking-wide" style={{fontFamily: 'Inter, sans-serif', fontWeight: '400'}}>
-          Your premier destination for luxury beauty treatments in Tel Aviv
+          {t('footer.luxury')}
         </div>
         <div className="text-xs tracking-[0.3em] text-emerald-400/60 mb-6 uppercase" style={{fontFamily: 'Inter, sans-serif', fontWeight: '500'}}>
-          Luxury · Excellence · Innovation
+          {t('footer.tagline')}
         </div>
         <div className="flex justify-center gap-8 text-emerald-300" style={{fontFamily: 'Inter, sans-serif', fontWeight: '400'}}>
-          <span>054-798-1852</span>
+          <span>{t('contact.phone1')}</span>
           <span>•</span>
-          <span>054-985-0418</span>
+          <span>{t('contact.phone2')}</span>
           <span>•</span>
-          <span>Chanoch St 41, Tel Aviv</span>
+          <span>{t('contact.address').replace('<br />', ', ')}</span>
         </div>
       </div>
     </footer>

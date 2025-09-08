@@ -6,9 +6,12 @@ import { Label } from "./ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 import { motion } from 'motion/react';
 import { Clock, Star, Shield } from 'lucide-react';
+import { useLanguage } from '../contexts/LanguageContext';
 import React from 'react';
 
 export const BookingSection: React.FC = () => {
+  const { t } = useLanguage();
+  
   return (
     <section id="booking" className="py-20 bg-gradient-to-br from-emerald-950 to-slate-900 relative overflow-hidden">
       {/* Gucci Horsebit Hardware Pattern */}
@@ -41,8 +44,8 @@ export const BookingSection: React.FC = () => {
                   <div className="relative px-6 py-3 bg-gradient-to-r from-emerald-900/30 to-amber-900/30 border border-emerald-400/30 backdrop-blur-sm">
                     <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-emerald-400 to-amber-400"></div>
                     <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-amber-400 to-emerald-400"></div>
-                    <div className="relative text-emerald-200 tracking-[0.4em] uppercase text-sm" style={{fontFamily: 'Inter, sans-serif', fontWeight: '600'}}>
-                      Book Now
+                    <div className="relative text-emerald-200 tracking-[0.4em] uppercase text-base" style={{fontFamily: 'Inter, sans-serif', fontWeight: '700'}}>
+                      {t('booking.badge')}
                     </div>
                   </div>
                   <div className="w-3 h-3 bg-gradient-to-br from-amber-400 to-emerald-400 rotate-45"></div>
@@ -50,15 +53,15 @@ export const BookingSection: React.FC = () => {
               </div>
             </div>
             <div className="mb-6">
-              <div className="text-4xl text-transparent bg-gradient-to-r from-emerald-400 to-amber-400 bg-clip-text leading-tight tracking-wide uppercase" style={{fontFamily: 'Poppins, sans-serif', fontWeight: '900'}}>
-                Schedule Your Appointment
+              <div className="text-5xl text-transparent bg-gradient-to-r from-emerald-400 to-amber-400 bg-clip-text leading-tight tracking-wide uppercase" style={{fontFamily: 'Poppins, sans-serif', fontWeight: '900'}}>
+                {t('booking.title')}
               </div>
-              <div className="text-xs tracking-[0.3em] text-emerald-300/60 mt-2 uppercase" style={{fontFamily: 'Inter, sans-serif', fontWeight: '500'}}>
-                Your Journey Begins Here
+              <div className="text-sm tracking-[0.3em] text-emerald-300/60 mt-2 uppercase" style={{fontFamily: 'Inter, sans-serif', fontWeight: '600'}}>
+                {t('booking.subtitle')}
               </div>
             </div>
-            <p className="text-emerald-100 text-lg mb-8" style={{fontFamily: 'Inter, sans-serif', fontWeight: '400'}}>
-              Ready to experience our premium beauty treatments? Book your appointment today and let our experts take care of you.
+            <p className="text-emerald-100 text-xl mb-8" style={{fontFamily: 'Inter, sans-serif', fontWeight: '500'}}>
+              {t('booking.description')}
             </p>
             
             <div className="space-y-4">
@@ -66,19 +69,19 @@ export const BookingSection: React.FC = () => {
                 <div className="p-2 bg-emerald-600 rounded-lg">
                   <Clock className="w-5 h-5 text-white" />
                 </div>
-                <span style={{fontFamily: 'Inter, sans-serif', fontWeight: '400'}}>Flexible scheduling available</span>
+                <span className="text-lg" style={{fontFamily: 'Inter, sans-serif', fontWeight: '500'}}>{t('booking.flexibleScheduling')}</span>
               </div>
               <div className="flex items-center gap-4 text-emerald-100">
                 <div className="p-2 bg-emerald-600 rounded-lg">
                   <Shield className="w-5 h-5 text-white" />
                 </div>
-                <span style={{fontFamily: 'Inter, sans-serif', fontWeight: '400'}}>Safe & professional treatments</span>
+                <span className="text-lg" style={{fontFamily: 'Inter, sans-serif', fontWeight: '500'}}>{t('booking.safeProfessional')}</span>
               </div>
               <div className="flex items-center gap-4 text-emerald-100">
                 <div className="p-2 bg-emerald-600 rounded-lg">
                   <Star className="w-5 h-5 text-white" />
                 </div>
-                <span style={{fontFamily: 'Inter, sans-serif', fontWeight: '400'}}>Premium quality service</span>
+                <span className="text-lg" style={{fontFamily: 'Inter, sans-serif', fontWeight: '500'}}>{t('booking.premiumQuality')}</span>
               </div>
             </div>
           </motion.div>
@@ -91,62 +94,62 @@ export const BookingSection: React.FC = () => {
           >
             <Card className="bg-gradient-to-br from-emerald-900/50 to-slate-800/50 border-emerald-400/20 backdrop-blur-sm">
               <CardHeader>
-                <div className="text-2xl text-emerald-100 tracking-wide uppercase" style={{fontFamily: 'Inter, sans-serif', fontWeight: '700'}}>Book Your Treatment</div>
-                <div className="text-emerald-300 tracking-wide mt-2" style={{fontFamily: 'Inter, sans-serif', fontWeight: '400'}}>
-                  Fill out the form below and we'll contact you to confirm your appointment
+                <div className="text-3xl text-emerald-100 tracking-wide uppercase" style={{fontFamily: 'Inter, sans-serif', fontWeight: '800'}}>{t('booking.formTitle')}</div>
+                <div className="text-emerald-300 tracking-wide mt-2 text-lg" style={{fontFamily: 'Inter, sans-serif', fontWeight: '500'}}>
+                  {t('booking.formDescription')}
                 </div>
               </CardHeader>
               <CardContent className="space-y-6">
                 <div className="grid md:grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label htmlFor="firstName" className="text-emerald-100">First Name</Label>
+                    <Label htmlFor="firstName" className="text-emerald-100">{t('booking.firstName')}</Label>
                     <Input 
                       id="firstName" 
-                      placeholder="Your first name"
+                      placeholder={t('booking.firstNamePlaceholder')}
                       className="bg-emerald-900/30 border-emerald-400/30 text-emerald-100 placeholder:text-emerald-300"
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="lastName" className="text-emerald-100">Last Name</Label>
+                    <Label htmlFor="lastName" className="text-emerald-100">{t('booking.lastName')}</Label>
                     <Input 
                       id="lastName" 
-                      placeholder="Your last name"
+                      placeholder={t('booking.lastNamePlaceholder')}
                       className="bg-emerald-900/30 border-emerald-400/30 text-emerald-100 placeholder:text-emerald-300"
                     />
                   </div>
                 </div>
                 
                 <div className="space-y-2">
-                  <Label htmlFor="phone" className="text-emerald-100">Phone Number</Label>
+                  <Label htmlFor="phone" className="text-emerald-100">{t('booking.phone')}</Label>
                   <Input 
                     id="phone" 
-                    placeholder="Your phone number"
+                    placeholder={t('booking.phonePlaceholder')}
                     className="bg-emerald-900/30 border-emerald-400/30 text-emerald-100 placeholder:text-emerald-300"
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="service" className="text-emerald-100">Preferred Treatment</Label>
+                  <Label htmlFor="service" className="text-emerald-100">{t('booking.service')}</Label>
                   <Select>
                     <SelectTrigger className="bg-emerald-900/30 border-emerald-400/30 text-emerald-100">
-                      <SelectValue placeholder="Select a treatment" />
+                      <SelectValue placeholder={t('booking.servicePlaceholder')} />
                     </SelectTrigger>
                     <SelectContent className="bg-emerald-900 border-emerald-400/30">
-                      <SelectItem value="laser-hair" className="text-emerald-100">Laser Hair Removal</SelectItem>
-                      <SelectItem value="rf-skin" className="text-emerald-100">RF Skin Tightening</SelectItem>
-                      <SelectItem value="tattoo-removal" className="text-emerald-100">Tattoo Removal</SelectItem>
-                      <SelectItem value="nail-care" className="text-emerald-100">Nail Care & Beauty</SelectItem>
-                      <SelectItem value="pigmentation" className="text-emerald-100">Pigmentation Treatment</SelectItem>
-                      <SelectItem value="skin-rejuvenation" className="text-emerald-100">Skin Rejuvenation</SelectItem>
+                      <SelectItem value="laser-hair" className="text-emerald-100">{t('services.laser.title')}</SelectItem>
+                      <SelectItem value="rf-skin" className="text-emerald-100">{t('services.rf.title')}</SelectItem>
+                      <SelectItem value="tattoo-removal" className="text-emerald-100">{t('services.tattoo.title')}</SelectItem>
+                      <SelectItem value="nail-care" className="text-emerald-100">{t('services.nails.title')}</SelectItem>
+                      <SelectItem value="pigmentation" className="text-emerald-100">{t('booking.pigmentation')}</SelectItem>
+                      <SelectItem value="skin-rejuvenation" className="text-emerald-100">{t('booking.skinRejuvenation')}</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="message" className="text-emerald-100">Additional Notes</Label>
+                  <Label htmlFor="message" className="text-emerald-100">{t('booking.message')}</Label>
                   <Textarea 
                     id="message" 
-                    placeholder="Any specific requirements or questions..."
+                    placeholder={t('booking.messagePlaceholder')}
                     className="bg-emerald-900/30 border-emerald-400/30 text-emerald-100 placeholder:text-emerald-300 min-h-[100px]"
                   />
                 </div>
@@ -159,7 +162,7 @@ export const BookingSection: React.FC = () => {
                   }}></div>
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-amber-700/20 via-emerald-700/20 to-transparent"></div>
                   <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(218,165,32,0.1),rgba(16,185,129,0.1),transparent_80%)]"></div>
-                  <span className="relative z-10 tracking-wide uppercase" style={{fontFamily: 'Poppins, sans-serif', fontWeight: '700'}}>Schedule Appointment</span>
+                  <span className="relative z-10 tracking-wide uppercase" style={{fontFamily: 'Poppins, sans-serif', fontWeight: '700'}}>{t('booking.submit')}</span>
                 </Button>
               </CardContent>
             </Card>

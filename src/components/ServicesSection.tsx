@@ -2,57 +2,61 @@ import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { ImageWithFallback } from './figma/ImageWithFallback';
 import { motion } from 'motion/react';
 import { Sparkles, Zap, Shield, Heart } from 'lucide-react';
+import { useLanguage } from '../contexts/LanguageContext';
 import React from 'react';
 
-const services = [
+const getServices = (t: (key: string) => string) => [
   {
     icon: <Zap className="w-8 h-8" />,
-    title: "Laser Hair Removal",
-    description: "Pain-free \"Ice Head\" technology",
+    title: t('services.laser.title'),
+    description: t('services.laser.description'),
     features: [
-      "Safe for all skin tones (light & dark)",
-      "Permanent hair reduction",
-      "Popular areas: face, arms, legs, underarms, bikini"
+      t('services.laser.feature1'),
+      t('services.laser.feature2'),
+      t('services.laser.feature3')
     ],
     image: "https://images.unsplash.com/photo-1720424643392-4b63bd63d271?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBiZWF1dHklMjBzYWxvbiUyMGxhc2VyJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1Njc3NzE3NHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
   },
   {
     icon: <Sparkles className="w-8 h-8" />,
-    title: "RF Skin Tightening",
-    description: "Non-invasive lifting & firming",
+    title: t('services.rf.title'),
+    description: t('services.rf.description'),
     features: [
-      "Reduces wrinkles and fine lines",
-      "Stimulates collagen production",
-      "Face & body treatments"
+      t('services.rf.feature1'),
+      t('services.rf.feature2'),
+      t('services.rf.feature3')
     ],
     image: "https://images.unsplash.com/photo-1709316054551-355656bd4815?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxlbGVnYW50JTIwc3BhJTIwc2tpbiUyMHRyZWF0bWVudHxlbnwxfHx8fDE3NTY3NzcxNzV8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
   },
   {
     icon: <Shield className="w-8 h-8" />,
-    title: "Tattoo Removal",
-    description: "Advanced laser technology",
+    title: t('services.tattoo.title'),
+    description: t('services.tattoo.description'),
     features: [
-      "Removes unwanted tattoos safely",
-      "Works on different colors and sizes",
-      "Minimal discomfort"
+      t('services.tattoo.feature1'),
+      t('services.tattoo.feature2'),
+      t('services.tattoo.feature3')
     ],
     image: "https://images.unsplash.com/photo-1728486885790-1454260d9246?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBiZWF1dHklMjBjbGluaWMlMjBpbnRlcmlvcnxlbnwxfHx8fDE3NTY3NzcxNzV8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
   },
   {
     icon: <Heart className="w-8 h-8" />,
-    title: "Nail Care & Beauty",
-    description: "Professional nail treatments",
+    title: t('services.nails.title'),
+    description: t('services.nails.description'),
     features: [
-      "Manicure & Pedicure",
-      "Nail extensions & designs",
-      "Gel polish & strengthening",
-      "Nail health treatments"
+      t('services.nails.feature1'),
+      t('services.nails.feature2'),
+      t('services.nails.feature3'),
+      t('services.nails.feature4')
     ],
     image: "https://images.unsplash.com/photo-1690749138086-7422f71dc159?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjBuYWlsJTIwc2Fsb24lMjBtYW5pY3VyZXxlbnwxfHx8fDE3NTY3NzcxNzV8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
   }
 ];
 
 export const ServicesSection: React.FC = () => {
+  const { t } = useLanguage();
+  const services = getServices(t);
+  
   return (
     <section id="services" className="py-20 bg-gradient-to-br from-slate-900 to-emerald-950 relative overflow-hidden">
       {/* Gucci Flora Botanical Pattern */}
@@ -87,8 +91,8 @@ export const ServicesSection: React.FC = () => {
                   <div className="absolute inset-0 bg-gradient-to-r from-amber-600 to-emerald-600 p-[2px] -z-10">
                     <div className="h-full w-full bg-gradient-to-br from-slate-900 to-emerald-950"></div>
                   </div>
-                  <div className="relative text-amber-200 tracking-[0.4em] uppercase text-xl" style={{fontFamily: 'Cinzel, serif', fontWeight: '600'}}>
-                    Our Treatments
+                  <div className="relative text-amber-200 tracking-[0.4em] uppercase text-2xl" style={{fontFamily: 'Cinzel, serif', fontWeight: '700'}}>
+                    {t('services.title')}
                   </div>
                 </div>
                 <div className="h-px w-32 bg-gradient-to-l from-transparent via-emerald-400 to-amber-400"></div>
@@ -98,11 +102,11 @@ export const ServicesSection: React.FC = () => {
             </div>
           </div>
           <div className="mb-8">
-            <div className="text-4xl lg:text-5xl text-transparent bg-gradient-to-r from-emerald-400 to-amber-400 bg-clip-text leading-tight tracking-wider uppercase mb-4" style={{fontFamily: 'Poppins, sans-serif', fontWeight: '900'}}>
-              Premium Beauty Services
+            <div className="text-5xl lg:text-6xl text-transparent bg-gradient-to-r from-emerald-400 to-amber-400 bg-clip-text leading-tight tracking-wider uppercase mb-4" style={{fontFamily: 'Poppins, sans-serif', fontWeight: '900'}}>
+              {t('services.subtitle')}
             </div>
-            <div className="text-base tracking-[0.3em] text-emerald-300/70 uppercase" style={{fontFamily: 'Inter, sans-serif', fontWeight: '500'}}>
-              Advanced Technology · Exceptional Care
+            <div className="text-lg tracking-[0.3em] text-emerald-300/70 uppercase" style={{fontFamily: 'Inter, sans-serif', fontWeight: '600'}}>
+              {t('services.tagline')}
             </div>
           </div>
         </motion.div>
@@ -122,8 +126,8 @@ export const ServicesSection: React.FC = () => {
                     <div className="p-3 bg-gradient-to-br from-emerald-600 to-amber-600 rounded-xl w-fit mx-auto mb-4 shadow-lg group-hover:scale-105 transition-transform duration-300">
                       {React.cloneElement(service.icon, { className: "w-6 h-6 text-white" })}
                     </div>
-                    <div className="text-xl text-emerald-100 tracking-wide uppercase leading-tight mb-2" style={{fontFamily: 'Cinzel, serif', fontWeight: '700'}}>{service.title}</div>
-                    <div className="text-emerald-300/80 text-sm tracking-wide" style={{fontFamily: 'Inter, sans-serif', fontWeight: '300'}}>{service.description}</div>
+                    <div className="text-2xl text-emerald-100 tracking-wide uppercase leading-tight mb-2" style={{fontFamily: 'Cinzel, serif', fontWeight: '800'}}>{service.title}</div>
+                    <div className="text-emerald-300/80 text-base tracking-wide" style={{fontFamily: 'Inter, sans-serif', fontWeight: '500'}}>{service.description}</div>
                   </div>
                   <div className="relative rounded-xl overflow-hidden mb-4">
                     <ImageWithFallback 
@@ -139,7 +143,7 @@ export const ServicesSection: React.FC = () => {
                     {service.features.map((feature, idx) => (
                       <li key={idx} className="flex items-start gap-2 text-emerald-100/90">
                         <div className="w-1.5 h-1.5 bg-gradient-to-r from-emerald-400 to-amber-400 rounded-full mt-2 flex-shrink-0"></div>
-                        <span className="text-sm leading-relaxed" style={{fontFamily: 'Inter, sans-serif', fontWeight: '300'}}>{feature}</span>
+                        <span className="text-base leading-relaxed" style={{fontFamily: 'Inter, sans-serif', fontWeight: '500'}}>{feature}</span>
                       </li>
                     ))}
                   </ul>

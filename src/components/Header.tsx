@@ -1,5 +1,7 @@
 import { motion, AnimatePresence } from 'motion/react';
 import React, { useState } from 'react';
+import { useLanguage } from '../contexts/LanguageContext';
+import { LanguageSwitcher } from './LanguageSwitcher';
 
 interface HeaderProps {
   scrollToSection: (sectionId: string) => void;
@@ -7,6 +9,7 @@ interface HeaderProps {
 
 export const Header: React.FC<HeaderProps> = ({ scrollToSection }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { t, isRTL, getFontFamily } = useLanguage();
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -21,7 +24,7 @@ export const Header: React.FC<HeaderProps> = ({ scrollToSection }) => {
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8 }}
-      className="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl bg-gradient-to-r from-emerald-950/80 via-slate-900/70 to-amber-950/80 border-b border-emerald-400/20"
+      className={`fixed top-0 left-0 right-0 z-50 backdrop-blur-xl bg-gradient-to-r from-emerald-950/80 via-slate-900/70 to-amber-950/80 border-b border-emerald-400/20 ${isRTL ? 'rtl' : 'ltr'}`}
     >
       {/* Gucci luxury pattern overlay */}
       <div className="absolute inset-0 opacity-20">
@@ -32,8 +35,8 @@ export const Header: React.FC<HeaderProps> = ({ scrollToSection }) => {
         }}></div>
       </div>
       
-      <div className="container mx-auto px-4 relative z-10">
-        <div className="flex items-center justify-between py-4">
+      <div className={`container mx-auto px-4 relative z-10 ${isRTL ? 'rtl' : 'ltr'}`}>
+        <div className={`flex items-center justify-between py-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
           {/* Logo */}
           <motion.div 
             initial={{ opacity: 0, x: -30 }}
@@ -45,15 +48,15 @@ export const Header: React.FC<HeaderProps> = ({ scrollToSection }) => {
               <div className="relative p-3 bg-gradient-to-br from-emerald-600/30 to-amber-600/30 backdrop-blur-sm border border-emerald-400/30 rounded-xl shadow-lg">
                 <div className="absolute inset-0 bg-gradient-to-br from-emerald-600/10 to-amber-600/10 rounded-xl"></div>
                 <div className="absolute inset-[1px] bg-gradient-to-br from-emerald-950/80 to-amber-950/80 rounded-[10px]"></div>
-                <div className="relative text-2xl text-transparent bg-gradient-to-r from-emerald-400 to-amber-400 bg-clip-text" style={{fontFamily: 'Cinzel, serif', fontWeight: '900'}}>
+                <div className="relative text-3xl sm:text-4xl text-transparent bg-gradient-to-r from-emerald-400 to-amber-400 bg-clip-text" style={{fontFamily: getFontFamily('display'), fontWeight: '900'}}>
                   JD
                 </div>
               </div>
               <div className="hidden sm:block">
-                <div className="text-xl text-transparent bg-gradient-to-r from-emerald-400 to-amber-400 bg-clip-text tracking-wide uppercase" style={{fontFamily: 'Poppins, sans-serif', fontWeight: '800'}}>
+                <div className="text-xl sm:text-2xl text-transparent bg-gradient-to-r from-emerald-400 to-amber-400 bg-clip-text tracking-wide uppercase" style={{fontFamily: getFontFamily('heading'), fontWeight: '900'}}>
                   Beauty & Nails
                 </div>
-                <div className="text-xs text-emerald-300/70 tracking-[0.2em] uppercase" style={{fontFamily: 'Inter, sans-serif', fontWeight: '500'}}>
+                <div className="text-sm sm:text-base text-emerald-300/70 tracking-[0.2em] uppercase" style={{fontFamily: getFontFamily('body'), fontWeight: '700'}}>
                   Luxury Salon
                 </div>
               </div>
@@ -65,13 +68,13 @@ export const Header: React.FC<HeaderProps> = ({ scrollToSection }) => {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="hidden md:flex items-center gap-2"
+            className={`hidden md:flex items-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}
           >
             {[
-              { label: 'Home', id: 'hero' },
-              { label: 'Services', id: 'services' },
-              { label: 'Book Now', id: 'booking' },
-              { label: 'Contact', id: 'contact' }
+              { label: t('nav.home'), id: 'hero' },
+              { label: t('nav.services'), id: 'services' },
+              { label: t('nav.book'), id: 'booking' },
+              { label: t('nav.contact'), id: 'contact' }
             ].map((item, index) => (
               <motion.button
                 key={item.id}
@@ -94,7 +97,7 @@ export const Header: React.FC<HeaderProps> = ({ scrollToSection }) => {
                   backgroundRepeat: 'repeat'
                 }}></div>
                 
-                <span className="relative z-10 text-emerald-100 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-emerald-300 group-hover:to-amber-300 group-hover:bg-clip-text transition-all duration-300 tracking-wide uppercase text-sm" style={{fontFamily: 'Cinzel, serif', fontWeight: '600'}}>
+                <span className="relative z-10 text-emerald-100 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-emerald-300 group-hover:to-amber-300 group-hover:bg-clip-text transition-all duration-300 tracking-wide uppercase text-base sm:text-lg" style={{fontFamily: getFontFamily('heading'), fontWeight: '800'}}>
                   {item.label}
                 </span>
 
@@ -103,6 +106,11 @@ export const Header: React.FC<HeaderProps> = ({ scrollToSection }) => {
               </motion.button>
             ))}
           </motion.nav>
+
+          {/* Language Switcher */}
+          <div className="hidden md:block">
+            <LanguageSwitcher />
+          </div>
 
           {/* Mobile Menu Button */}
           <motion.button
@@ -157,10 +165,10 @@ export const Header: React.FC<HeaderProps> = ({ scrollToSection }) => {
                   <div className="absolute inset-0 bg-gradient-to-br from-emerald-600/5 to-amber-600/5 rounded-xl"></div>
                   <div className="relative p-4 space-y-2">
                     {[
-                      { label: 'Home', id: 'hero' },
-                      { label: 'Services', id: 'services' },
-                      { label: 'Book Now', id: 'booking' },
-                      { label: 'Contact', id: 'contact' }
+                      { label: t('nav.home'), id: 'hero' },
+                      { label: t('nav.services'), id: 'services' },
+                      { label: t('nav.book'), id: 'booking' },
+                      { label: t('nav.contact'), id: 'contact' }
                     ].map((item, index) => (
                       <motion.button
                         key={item.id}
@@ -176,7 +184,7 @@ export const Header: React.FC<HeaderProps> = ({ scrollToSection }) => {
                         <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-emerald-400/30 to-transparent group-hover:via-emerald-400/50 transition-all duration-300"></div>
                         <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-amber-400/30 to-transparent group-hover:via-amber-400/50 transition-all duration-300"></div>
                         
-                        <span className="relative z-10 text-emerald-100 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-emerald-300 group-hover:to-amber-300 group-hover:bg-clip-text transition-all duration-300 tracking-wide uppercase text-sm" style={{fontFamily: 'Cinzel, serif', fontWeight: '600'}}>
+                        <span className="relative z-10 text-emerald-100 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-emerald-300 group-hover:to-amber-300 group-hover:bg-clip-text transition-all duration-300 tracking-wide uppercase text-lg" style={{fontFamily: getFontFamily('heading'), fontWeight: '800'}}>
                           {item.label}
                         </span>
 
@@ -184,6 +192,13 @@ export const Header: React.FC<HeaderProps> = ({ scrollToSection }) => {
                         <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-emerald-400/0 via-emerald-400/0 to-amber-400/0 group-hover:from-emerald-400/10 group-hover:via-transparent group-hover:to-amber-400/10 transition-all duration-500"></div>
                       </motion.button>
                     ))}
+                    
+                    {/* Language Switcher in Mobile Menu */}
+                    <div className="pt-4 border-t border-emerald-400/20">
+                      <div className="flex justify-center">
+                        <LanguageSwitcher />
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
