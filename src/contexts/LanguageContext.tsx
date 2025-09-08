@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
 export type Language = 'en' | 'ti' | 'he';
 
@@ -297,10 +297,91 @@ interface LanguageProviderProps {
 }
 
 export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) => {
-  const [language, setLanguage] = useState<Language>('en');
+  // Browser language detection function
+  const detectBrowserLanguage = (): Language => {
+    // Check if user has a saved preference in localStorage
+    const savedLanguage = localStorage.getItem('preferred-language') as Language;
+    if (savedLanguage && ['en', 'he', 'ti'].includes(savedLanguage)) {
+      return savedLanguage;
+    }
+
+    // Get browser language
+    const browserLang = navigator.language || (navigator as any).userLanguage || 'en';
+    
+    // Language mapping - map browser language codes to our supported languages
+    const languageMap: { [key: string]: Language } = {
+      // Hebrew
+      'he': 'he',
+      'he-il': 'he',
+      'he-IL': 'he',
+      'iw': 'he',
+      'iw-il': 'he',
+      'iw-IL': 'he',
+      
+      // Tigrinya (Ethiopian languages)
+      'ti': 'ti',
+      'ti-et': 'ti',
+      'ti-ET': 'ti',
+      'ti-er': 'ti',
+      'ti-ER': 'ti',
+      'am': 'ti', // Amharic - fallback to Tigrinya for Ethiopian languages
+      'am-et': 'ti',
+      'am-ET': 'ti',
+      'om': 'ti', // Oromo - fallback to Tigrinya for Ethiopian languages
+      'om-et': 'ti',
+      'om-ET': 'ti',
+      'so': 'ti', // Somali - fallback to Tigrinya for Ethiopian languages
+      'so-et': 'ti',
+      'so-ET': 'ti',
+      
+      // English (default)
+      'en': 'en',
+      'en-us': 'en',
+      'en-US': 'en',
+      'en-gb': 'en',
+      'en-GB': 'en',
+      'en-ca': 'en',
+      'en-CA': 'en',
+      'en-au': 'en',
+      'en-AU': 'en'
+    };
+
+    // Check for exact match first
+    if (languageMap[browserLang]) {
+      return languageMap[browserLang];
+    }
+
+    // Check for language code only (without country code)
+    const langCode = browserLang.split('-')[0].toLowerCase();
+    if (languageMap[langCode]) {
+      return languageMap[langCode];
+    }
+
+    // Default fallback to English
+    return 'en';
+  };
+
+  const [language, setLanguage] = useState<Language>(detectBrowserLanguage());
+
+  // Enhanced setLanguage function that saves to localStorage
+  const handleSetLanguage = (newLanguage: Language) => {
+    setLanguage(newLanguage);
+    localStorage.setItem('preferred-language', newLanguage);
+  };
+
+  // Effect to handle initial language detection
+  useEffect(() => {
+    const detectedLanguage = detectBrowserLanguage();
+    
+    // Only set if different from current (to avoid unnecessary re-renders)
+    if (detectedLanguage !== language) {
+      setLanguage(detectedLanguage);
+    }
+  }, []); // Empty dependency array - only run once on mount
 
   const t = (key: string): string => {
-    return translations[language][key as keyof typeof translations[typeof language]] || key;
+    const currentTranslations = translations[language];
+    return (currentTranslations as any)[key] || key;
   };
 
   const isRTL = language === 'he';
@@ -332,7 +413,7 @@ export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) 
   };
 
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, t, isRTL, getFontFamily }}>
+    <LanguageContext.Provider value={{ language, setLanguage: handleSetLanguage, t, isRTL, getFontFamily }}>
       {children}
     </LanguageContext.Provider>
   );
